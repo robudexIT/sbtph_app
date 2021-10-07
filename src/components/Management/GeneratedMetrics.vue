@@ -1,9 +1,8 @@
 <template>
-    <h1>Metrics</h1>
-    <div>{{ metricsGenerated }}</div>
+    <!-- <div>{{ metricsGenerated }}</div> -->
      <base-container>
         <base-table :theader="metricsHeader" tableclass='metrics' :metricsHeader="metricsGenerated.tableTagHeader">
-             <generated-metrics-data-list :metrics="metricsGenerated" :sort_order="sort_order"></generated-metrics-data-list>
+             <generated-metrics-data-list :metrics="metricsGenerated" :sort_order="sort_order" :tdata="metricsGenerated.tableTagRecords"></generated-metrics-data-list>
         </base-table>
      </base-container>
 
