@@ -1,5 +1,5 @@
 export default {
-    getGeneratedMetrics(state){
-        return state.generatedMetrics
+    getTagMetricsGeneratedData(state){
+        return state.tagMetricsGeneratedData
     }
 }

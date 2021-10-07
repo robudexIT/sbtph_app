@@ -207,7 +207,8 @@ export default {
        
            this.$router.push({name: 'generatedmetrics',
               params: {
-                sort_order: this.sortedOrder
+                sort_order: this.sortedOrder,
+                option_metrics: this.optionMetrics.val
               },
               query: {group: this.group,
                       start_date_and_time,

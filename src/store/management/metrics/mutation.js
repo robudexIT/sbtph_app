@@ -1,5 +1,7 @@
 export default {
     mutGeneratedMetrics(state, payload){
-        state.generatedMetrics = payload
+       if(payload.option_metrics == 'tag'){
+           state.tagMetricsGeneratedData = payload.tagMetricsData
+       }
     }
 }

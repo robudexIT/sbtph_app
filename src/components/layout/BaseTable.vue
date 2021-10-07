@@ -1,7 +1,7 @@
 <template>
     <table class="table" :class="tableStriped">
                 <thead :class="tableDark">
-                    <table-header :theader="theader"></table-header>
+                    <table-header :theader="theader" :metricsHeader="metricsHeader"></table-header>
                 </thead>
                 <tbody>
                     <slot></slot>
@@ -13,7 +13,7 @@
  import TableHeader from './tablelayout/TableHeader.vue'
 
 export default {
-    props: ['theader','tdata','tableclass'],
+    props: ['theader','tdata','tableclass', 'metricsHeader'],
     components: {
          TableHeader,
          

@@ -99,13 +99,19 @@
        <th scope="col">ACTION</th>
     </tr>
 
+    <tr v-if="theader=='metrics_tag'">
+        <th v-for="header in metricsHeader" :key='header'>{{header}}</th>
+    </tr>
+
     
     
 </template>
 
 <script>
 export default {
-    props:['theader'],
+    props:['theader','metricsHeader'],
+
+    created(){}
    
 }
 

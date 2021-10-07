@@ -49,7 +49,7 @@ const router = createRouter({
         { path: '/manage/getallagents/:agent', component: ManageAgents, props: true},
         { path: '/tags', component: ManageTags, props: true},
         { path: '/metrics', component: TheMetrics, props: true},
-        {name:'generatedmetrics', path: '/generatedmetrics/:sort_order', component: GeneratedMetrics, props: true},
+        {name:'generatedmetrics', path: '/generatedmetrics/:sort_order/:option_metrics', component: GeneratedMetrics, props: true},
 
         
 
