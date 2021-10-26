@@ -1,10 +1,12 @@
 <template>
 <div>
-    <base-container>
-      <base-table :theader="calltype" tableclass='cdr'>
-          <calls-details-data-list :tdata="callsDetails[0]" :tags="callsDetails[0]" :calltype="calltype" ></calls-details-data-list>
+    <base-container> 
+       <h2 class="text-center font-weight-bold text-primary">{{callsDetails[0][0].name}}-<span class='text-danger'> CALLS DETAILS </span><button class="btn btn-secondary btn-sm" @click=" exportfetchDetails"> EXPORT </button></h2>
+        
+    </base-container>
+     <base-table :theader="calltype" tableclass='cdr' :tags="callsDetails[1]">
+          <calls-details-data-list :tdata="callsDetails[0]" :tags="callsDetails[1]" :calltype="calltype" @emittedData="putCommentTag"></calls-details-data-list>
       </base-table>
-   </base-container>
   
 </div>
 </template>
@@ -13,10 +15,12 @@
 import CallsDetailsDataList from './data/CallsDetailsDataList.vue'
 
 export default {
+  emits:['emittedData'],
   components: {
     CallsDetailsDataList,
   },
-  props:['calltype'],  
+  props:['calltype'],
+  
   methods:{
     fetchCallDetials(){
      
@@ -27,7 +31,20 @@ export default {
      }catch(e){
        console.log(e.message)
      }
-    }
+    },
+    exportfetchDetails(){
+            let dataToBeExported
+              dataToBeExported = this.$store.getters['agentcdr/getDetailsExportData']
+        //    console.log(dataToBeExported)  
+             window.Jhxlsx.export(dataToBeExported.tableData, dataToBeExported.options);
+        
+    },
+    putCommentTag(data){
+       let querystring = window.location.search.substring(1)
+       console.log(data)
+      this.$store.dispatch('agentcdr/putCommentTag',{querystring,data:data,calltype:this.calltype})
+
+    },
   },
   computed: {
     callsDetails(){
@@ -47,6 +64,7 @@ export default {
       return calldetails
     }
   },
+  
   created(){
     this.fetchCallDetials()
   },

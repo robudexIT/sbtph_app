@@ -1,7 +1,8 @@
 <template>
   <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
   <div class="container-fluid">
-    <router-link class="navbar-brand" to="/csdinbound">CSD PHILIPPINES MONITORING</router-link>
+    <router-link class="navbar-brand" to="/phone/loggedin">CSD PHILIPPINES MONITORING</router-link>
+
     <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

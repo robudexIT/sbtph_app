@@ -2,7 +2,7 @@
   <div>
     <the-header></the-header>
     <the-navigation></the-navigation>
-     <router-view></router-view>
+     <router-view ></router-view>
      <play-ground></play-ground>
     
   </div>
@@ -18,9 +18,16 @@ export default {
       TheHeader,
       TheNavigation,
      // PlayGround
+    },
+    methods: {
+    },
+    created(){
+     
+    },
+    mounted(){
+      
     }
-
-   
+    
 }
 </script>
 
@@ -33,4 +40,6 @@ body {
 body {
   padding-top: 56px;
 }
+
+
 </style>

@@ -19,12 +19,16 @@ const store = createStore({
     },
     state(){
         return {
-            localUserId: 'local'
+            localUserId: 'local',
+             userName: 'Rogmer'
         }
     },
     getters:{
         getLocal(state){
             return state.localUserId
+        },
+        getUserName(state){
+            return state.userName
         }
     }
 })

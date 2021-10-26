@@ -9,7 +9,7 @@ export default {
         }else if(payload.phone == 'loggedout'){
             phoneApi = API.phoneLogggedOut
         }
-        console.log(phoneApi)
+       
         const respone = await fetch(phoneApi)
         if(!respone.ok ){
             const error =  Error('Error in Fetching PhoneUser Status')

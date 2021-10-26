@@ -13,6 +13,9 @@ import ManageTags from './components/Management/ManageTags.vue'
 import GeneratedMetrics from './components/Management/GeneratedMetrics.vue'
 import TheMetrics from './components/Management/TheMetrics.vue'
 
+//study
+import PlayGround from './components/PlayGround.vue'
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -51,12 +54,15 @@ const router = createRouter({
         { path: '/metrics', component: TheMetrics, props: true},
         {name:'generatedmetrics', path: '/generatedmetrics/:sort_order/:option_metrics', component: GeneratedMetrics, props: true},
 
-        
+        {path :'/playground', component: PlayGround}
 
 
     ]
     
 })
+router.beforeEach((to, from, next) => {
+    next()
+  })
 
 
 export default router

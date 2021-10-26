@@ -34,5 +34,19 @@ export default {
     },
     getVoiceMails(state){
         return state.voiceMails
+    },
+
+
+    getTagComment(state){
+        return state.tagComment 
+    }, 
+    getSummariesExportData(state){
+        return  state.summariesExportData
+    },
+    getDetailsExportData(state){
+        return state.detailsExportData
+    },
+    getMissedCallsDetailsExport(state){
+        return state.missedCallsDetailsExport
     }
 }

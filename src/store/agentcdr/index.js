@@ -2,7 +2,6 @@ import getters from './getters.js'
 import mutations from './mutations.js'
 import actions from './actions.js'
 
-
 const agentcdr = {
     namespaced: true,
     state(){
@@ -19,6 +18,10 @@ const agentcdr = {
             missedCallsDetails:[],
             parkedCalls:[],
             voiceMails:[],
+            summariesExportData: {},
+            detailsExportData: {},
+            missedCallsDetailsExport:{},
+            tagComment :[]
         }
     },
     getters,

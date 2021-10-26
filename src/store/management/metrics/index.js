@@ -6,7 +6,13 @@ export default {
     namespaced: true,
     state(){
         return {
-            tagMetricsGeneratedData: {}
+            tagMetricsGeneratedData: {},
+            cdrMetricsGeneratedData:{},
+            tagExportData: {},
+            cdrExportData: {},
+            grandTotalCounts: null,
+            grantTotalDurations: null,
+            dateTimeRange: null
         }
     },
     getters,

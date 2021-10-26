@@ -1,8 +1,10 @@
 <template>
    <base-container>
-    <!-- <div>{{callSummaries}}</div> -->
-    <base-table :theader="calltype" tableclass='cdr'>
-        <call-summary-data-list :tdata="callSummaries[0]" :tag="callSummaries[1]"></call-summary-data-list>
+     <button class="btn btn-primary h-25 p-1 w-100 " @click="exportfetchSummries">
+         Export 
+    </button>
+    <base-table :theader="calltype" tableclass='cdr' :tags="callSummaries[1]" @emittedData="searchResult">
+        <call-summary-data-list :tdata="callSummaries[0]" :tags="callSummaries[1]" ></call-summary-data-list>
     </base-table>
    </base-container>
   
@@ -20,20 +22,32 @@ export default {
         return {
             error: null,
             ctype: null,
+            querystring: null
             
         }
     },
     methods:{
+        searchResult(from,to,tag){
+            this.$router.push({path:this.$route.path, query:{startdate:from ,enddate:to,tagname:tag}})
+        },
         fetchSummaries(){
-            let querystring = window.location.search.substring(1)
+            this.querystring = window.location.search.substring(1)
+       
             this.ctype = this.calltype
             try{
-                this.$store.dispatch('agentcdr/fetchCallsSummaries',{querystring,calltype:this.calltype})
+                this.$store.dispatch('agentcdr/fetchCallsSummaries',{querystring:this.querystring,calltype:this.calltype})
                 
             }catch(e){
                 this.error = e.message || 'Error fetch call summary'
             }
 
+        },
+          exportfetchSummries(){
+            let dataToBeExported
+              dataToBeExported = this.$store.getters['agentcdr/getSummariesExportData']
+        //    console.log(dataToBeExported)  
+             window.Jhxlsx.export(dataToBeExported.tableData, dataToBeExported.options);
+        
         }
     },
     computed:{
@@ -61,8 +75,12 @@ export default {
     },
     watch:{
         calltype(){
+           
             this.fetchSummaries()
-        }
+        },
+       $route(){
+           this.fetchSummaries()
+       }
     }
 }
 </script>

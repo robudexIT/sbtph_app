@@ -7,10 +7,7 @@
         <th scope="col" v-if="theader=='sales'">TEAMLEADER</th>
         <th scope="col">Total Made Calls </th>
         <th scope="col">Total Calls Duration</th>
-         <th scope="col">
-           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myDateRange" dataset-backdrop="static" dataset-keyboard="false" id="selectdate">SELECT DATE</button>
-           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#mySearch" dataset-backdrop="static" dataset-keyboard="false">SEARCH</button>
-        </th>
+         <slot></slot>
     </tr>
 
     <tr v-if="theader=='csdinbounddetails' || theader=='csdoutbounddetails' || theader=='collectiondetails' || theader=='salesdetails'">
@@ -23,11 +20,7 @@
         <th scope="col">EndTime</th>
         <th scope="col">Duration</th>
         <th scope="col">Recordings</th> 
-        <th scope="col">
-            <input type="hidden" name="extension" id="extension">
-            <input type="hidden" name="name" id="name">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myDateRange" dataset-backdrop="static" dataset-keyboard="false" id="selectdate">SELECT DATE</button>
-        </th>
+        <slot></slot>
         <th scope="col">Comment/Tag</th>
      </tr>
 
@@ -41,9 +34,7 @@
      <tr v-if="theader=='missedcalls'">
          <th scope="col">#</th>
         <th scope="col" >Total Missed Calls</th>
-        <th scope="col">
-          <button type="button" class="btn btn-primary btn-small" data-toggle="modal" data-target="#myDateRange" dataset-backdrop="static" dataset-keyboard="false" id="selectdate">SELECT DATE</button>
-        </th>
+        <slot></slot>
     </tr>
 
      <tr  v-if="theader=='detailedmissedcalls'"> 
@@ -54,12 +45,7 @@
          <th scope="col">CallStatus</th>
          <th scope="col">Comment</th>
          <th scope="col">Comment By</th>
-         <th scope="col">
-             <input type="hidden" name="extension" id="extension">
-             <input type="hidden" name="username" id="username">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myDateRange" dataset-backdrop="static" dataset-keyboard="false" id="selectdate">SELECT DATE</button>
-
-         </th>
+         <slot></slot>
      </tr>
 
      <tr v-if="theader=='voicemails'">
@@ -99,16 +85,18 @@
        <th scope="col">ACTION</th>
     </tr>
 
-    <tr v-if="theader=='metrics_tag'">
+    <tr v-if="theader=='metricsHeader'">
         <th v-for="header in metricsHeader" :key='header'>{{header}}</th>
     </tr>
 
-    
+    <select-date-range-modal-form></select-date-range-modal-form>
     
 </template>
 
 <script>
+
 export default {
+
     props:['theader','metricsHeader'],
 
     created(){}

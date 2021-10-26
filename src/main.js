@@ -12,6 +12,7 @@ import DropDownMenu from './components/layout/dropdown/DropDownMenu.vue'
 import store from './store/index.js'
 import router from './router.js'
 
+
 const app = createApp(App)
 
 app.component('base-container',BaseContainer)
@@ -22,5 +23,5 @@ app.component('drop-down-menu',DropDownMenu)
 app.use(store)
 app.use(router)
 
-
+//app.use(XLSX)
 app.mount('#app')

@@ -3,16 +3,18 @@
     <nav class="nav nav-underline" aria-label="Secondary navigation">
         <router-link class="nav-link mx-0 px-2" to="/phone/loggedin">ACTIVE</router-link>
         <router-link class="nav-link mx-0 px-2"  to="/phone/loggedout">INACTIVE</router-link>
-        <router-link class="nav-link  mx-0 px-2" to="/callsummaries/csdinbound">CSD-INBOUND</router-link>
+        <router-link class="nav-link mx-0 px-2" to="/callsummaries/csdinbound">CSD-INBOUND</router-link>
         <router-link class="nav-link mx-0 px-2"  to="/callsummaries/csdoutbound">CSD-OUTBOUND</router-link>
         <router-link class="nav-link mx-0 px-2"  to="/missedcalls">CSD-MISSED-CALLS </router-link>
         <router-link class="nav-link mx-0 px-2"  to="/parkedcalls">PARKED-CALLS </router-link>
         <router-link class="nav-link mx-0 px-2"  to="/voicemails">VOICE-MAILS </router-link> 
         <router-link class="nav-link mx-0 px-2"  to="/callsummaries/collection">COLLECTION-TEAM</router-link>
-        <router-link class="nav-link mx-0 px-2"  to="/callsummaries/sales">SALES-TEAM</router-link> -->
-         <router-link class="nav-link mx-0 px-2"  to="/management">MANAGEMENT</router-link>  -->
+        <router-link class="nav-link mx-0 px-2"  to="/callsummaries/sales">SALES-TEAM</router-link> 
+         <router-link class="nav-link mx-0 px-2"  to="/management">MANAGEMENT</router-link>  
      
     </nav>
+
+    
 
      
   </div>
@@ -26,7 +28,7 @@
   height: 2.75rem;
   overflow-y: hidden;
 }
-
+/* 
 .nav-scroller .nav {
   display: flex;
   flex-wrap: nowrap;
@@ -44,14 +46,38 @@
   padding-bottom: .75rem;
   font-size: .875rem;
   color: #6c757d;
+
 }
 
-.nav-underline .nav-link:hover {
-  color: #007bff;
+
+.nav-underline .nav-link:active {
+  background-color: #007bff;
+  color: white;
+} */
+
+/* .nav-underline .active {
+   background-color: #007bff;
+      color: white;;
+} */
+
+/* a:active{
+    background-color:  #007bff;
+    color:red;
+    font-weight: bold;
+}  */
+
+.nav-underline .nav-link:hover  {
+  background-color: purple;
+ 
+  color: white;
 }
 
-.nav-underline .active {
-  font-weight: 500;
-  color: #343a40;
+.nav-link {
+  color: grey;
+  /* transition: background-color 2s, height 2s, width 2s; */
+}
+a.router-link-active {
+     background-color: #007bff;
+      color: white;;
 }
 </style>

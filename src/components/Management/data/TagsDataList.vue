@@ -6,16 +6,15 @@
        <td >{{item.createdby}}</td>
        <td >{{item.createddate}}</td>
         <td>
-            <button class="btn btn-danger btn-sm font-weight-normal lead">DELETE</button>
+            <button class="btn btn-danger btn-sm font-weight-normal lead" :id="item.tagId" @click="deleteTag(item.tagId)">DELETE</button>
         </td>
      </tr>
-     <button>Add TAG</button>
+     
 </template>
 
 <script>
     export default {
         props:['tdata'],
-
         methods:{       
             tagNameStyle(tagtype){
                 let tagnameColor
@@ -29,6 +28,9 @@
                     tagnameColor = 'purple'
                 }  
                 return { color: tagnameColor, fontWeight : 700 }
+            },
+            deleteTag(tagId){
+                this.$emit('click', tagId)
             }
         }
      

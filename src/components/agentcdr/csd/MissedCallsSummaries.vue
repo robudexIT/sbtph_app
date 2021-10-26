@@ -1,8 +1,10 @@
 <template>
     <div>
     <base-container>
-      <base-table theader="missedcalls">
-          <missed-calls-summaries-data-list :tdata="missedCallsSummaries"  ></missed-calls-summaries-data-list>
+      <base-table theader="missedcalls"  @emittedData="searchResult" >
+         <template v-slot:default>
+             <missed-calls-summaries-data-list :tdata="missedCallsSummaries"  ></missed-calls-summaries-data-list>
+          </template>
       </base-table>
    </base-container>
   
@@ -13,13 +15,24 @@
 <script>
 import MissedCallsSummariesDataList from '../data/MissedCallsSummariesDataList.vue'
  export default {
+     emits: ['searchResult'],
      components:{
          MissedCallsSummariesDataList,
      },
      methods:{
+          searchResult(from,to,tag){
+            this.$router.push({path:this.$route.path, query:{startdate:from ,enddate:to,tagname:tag}})
+            
+        },
          fetchMissedCallsSummaries(){
-         
-            let querystring = 'startdate=2021-09-01&enddate=2021-09-10&option=summary'
+              let querystring = window.location.search.substring(1)
+              console.log(querystring)
+              if(querystring !== ''){
+                  querystring = querystring + '&option=summary'
+              }else{
+                  querystring = 'startdate=2021-08-01&enddate=2021-08-23&tagname=all&option=summary'
+              }
+              console.log(querystring)
              try{
                  this.$store.dispatch('agentcdr/fetchMissedCallsSummaries', {querystring})//short hand for querystring:querystring
              }catch(e){
@@ -34,6 +47,12 @@ import MissedCallsSummariesDataList from '../data/MissedCallsSummariesDataList.v
      },
      created(){
          this.fetchMissedCallsSummaries()
+     },
+     watch:{
+         $route(){
+              console.log('there is change fire it')
+              this.fetchMissedCallsSummaries()
+         }
      }
  }
 </script>
