@@ -1,56 +1,28 @@
 <template>
-
-    <div>
-      <label>Name</label>
-      <input type="text" v-model="name">
-    </div>
-    <div>
-      <label>Age</label>
-      <input type="number" v-model="age">
-    </div>
-    <button @click="clickMe">CLICK</button>
-    <button @click="changeValue">Change</button>
-
-  <p v-if="isBtn">{{getInfo}}</p>
+  <div>
+    <font-awesome-icon :icon="myIcon" />
+     <button class="btn btn-primary"> CSD <font-awesome-icon :icon="myPhone" /></button>
+  </div>
 </template>
 
 <script>
-  export default {
-    data(){
-      return {
-        isBtn: false,
-        name: 'Rogmer',
-        age: '',
-        isUpdated: false
-      }
-    },
-    computed:{
-      getInfo(){
-        return this.name + ' ' +this.age
-      }
-    },
-    methods:{
-       clickMe(){
-        // this.isBtn = !this.isBtn
-       },
-       changeValue(){
-         this.isUpdated = !this.isUpdated
-       }
-    },
-    watch:{
-       isUpdated(newvalue){
-        if(newvalue){
-         // this.$router.push('/callsummaries/csdinbound')
-         alert('get new update value')
-        }else{
-          alert('old value ')
-          // this.$router.push('/callsummaries/csdoutbound')
-        }
-       }
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faPhoneVolume } from '@fortawesome/free-solid-svg-icons'
+
+
+export default {
+  name: 'MyComponent',
+
+  data () {
+    return {
+      myIcon: faSpinner,
+      myPhone : faPhoneVolume
     }
+  },
+
+  components: {
+    FontAwesomeIcon
   }
+}
 </script>
-
-<style scoped>
-
-</style>

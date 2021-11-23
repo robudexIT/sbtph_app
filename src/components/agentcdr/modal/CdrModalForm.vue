@@ -16,7 +16,7 @@
                       <label for="Add Tag"  class="mb-3">Add Comment</label>
                      <textarea  class="form-control" cols="62" placeholder="Put Your Comment Here." :value="currentComment" @input="setNewComment"></textarea>
                    </div>
-                    <div class="mb-3" v-if="mode=='tag'">
+                    <div class="mb-3" v-if="mode=='tagandcomment'">
                         <label for="TagType" class="mb-2" >Select Tag:</label>
                         <select class="form-select"  :value="currentTag" @change="setNewTag">
                             <option v-for="tag in tags" :key="tag" :value="tag">{{tag}}</option>
@@ -55,7 +55,7 @@ export default {
             formIsValid: true,
         }
     },
-   
+    
     methods:{
         setNewTag(e){
             this.newTag = e.target.value
@@ -70,12 +70,14 @@ export default {
             if(!this.formValidation()){
                 return
             }
+            const loggedInUserName = this.$store.getters['getLoggedinUserData'].name
+      
             const data = {}
                 data.starttimestamp = this.callDetails.starttimestamp;
                 data.getdate = this.callDetails.getDate
                 data.whoansweredcall = this.callDetails.extension
                 data.caller = this.callDetails.caller
-                data.commentby = "Rogmer"
+                data.commentby = loggedInUserName
 
                 if(this.newComment != null){
                     data.comment = this.newComment
@@ -85,7 +87,7 @@ export default {
                     data.comment = this.currentComment
                     this.newComment = null
                 }
-                if(this.mode == 'tag'){
+                if(this.mode == 'tagandcomment'){
                     if(this.newTag !=  null){
                         data.tag = this.newTag
                         this.newTag = null

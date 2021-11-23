@@ -1,4 +1,7 @@
 <template>
+    <base-dialog :show="!!error" @close="handleError">
+     <p>{{error}}</p>
+   </base-dialog>
      <base-container>
         <base-table theader="phoneloginheader" tableclass='cdr'>
             <phone-data-list :tdata="getPhoneList"></phone-data-list>
@@ -27,6 +30,9 @@ export default {
                 this.error = e.message
              
             }
+        },
+        handleError(){
+            this.error = null
         }
     },
     computed:{
@@ -39,9 +45,13 @@ export default {
             }
             
             return phoneLists
+        },
+        getAutoLogoutStatus(){
+            return this.$store.getters['getAutoLogoutStatus']
         }
     },
     created(){
+       this.$store.dispatch('checkIfCurrentLogin')
        this.fetchPhoneStatus()
        
     },
@@ -50,9 +60,13 @@ export default {
             if(newvalue != value){
                  this.fetchPhoneStatus()
             }
-           
 
+        },
+        getAutoLogoutStatus(currentstatus , oldstatus){
+        if(currentstatus && currentstatus !== oldstatus){
+          this.$router.replace('/login')
         }
+      }
     }
 }
 </script>

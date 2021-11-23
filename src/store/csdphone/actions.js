@@ -25,5 +25,20 @@ export default {
         context.commit('getPhoneStatus', payload)
 
     },
+    async agentPhoneLogsDetails(context, payload){
+        const querystring = payload.querystring
+        console.log(querystring)
+        const response = await fetch(`${API.phoneLogsDetails}?${querystring}`)
+
+        if(!response.ok){
+            const error = new Error('Error in Accessing Agent Phone Logs Details')
+            throw error
+        }else{
+           
+            const data = await response.json()
+            console.log(data)
+            context.commit('mutagentPhoneLogsDetails', data)
+        }
+    }
    
 }

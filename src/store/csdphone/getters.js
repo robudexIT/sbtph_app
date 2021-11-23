@@ -7,8 +7,8 @@ export default {
         return state.phoneLoggedOut
     },
 
-    getAllAgentPhoneLog(state){
-        return state.allAgentPhoneLog
+    getAgentPhoneLogsDetails(state){
+        return state.agentPhoneLogsDetails
     }
 
 }

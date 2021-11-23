@@ -13,5 +13,8 @@ export default {
     },
     getSalesTeamLeaders(state){
         return state.salesTeamLeaders
+    },
+    getAgentBelongsTo(state){
+        return state.agentBelongsTo
     }
 }

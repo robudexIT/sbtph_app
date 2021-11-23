@@ -22,7 +22,8 @@ export default {
                 'RUSTAN',
                 'ZARWIN',
                 'SALLY'
-            ]
+            ],
+            agentBelongsTo: null
         }
     },
     getters,

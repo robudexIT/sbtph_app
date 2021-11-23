@@ -21,7 +21,9 @@ const agentcdr = {
             summariesExportData: {},
             detailsExportData: {},
             missedCallsDetailsExport:{},
-            tagComment :[]
+            mpvTotalCounts: [],
+            tagComment :[],
+            resultSearchNUmber: []
         }
     },
     getters,

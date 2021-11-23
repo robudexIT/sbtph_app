@@ -1,13 +1,24 @@
 <template>
+
+  <base-dialog :show="!!error" @close="handleError">
+     <p>{{error}}</p>
+   </base-dialog>
    <base-container>
-     <button class="btn btn-primary h-25 p-1 w-100 " @click="exportfetchSummries">
+   
+     <button class="btn btn-primary h-25 p-1 w-100 export_btn " @click="exportfetchSummries">
          Export 
     </button>
-    <base-table :theader="calltype" tableclass='cdr' :tags="callSummaries[1]" @emittedData="searchResult">
-        <call-summary-data-list :tdata="callSummaries[0]" :tags="callSummaries[1]" ></call-summary-data-list>
+   
+    <base-table  :calltype="calltype" :theader="calltype" tableclass='cdr' :tags="callSummaries[1]" @emittedData="searchResult" @emittedDataSearchNumber="searchResultNumber">
+        <base-dialog v-if="isLoading" :show="isLoading">
+           <base-spinner>
+             <p>Fetching Data From the Database Please Wait....</p>
+           </base-spinner>
+        </base-dialog>
+        <call-summary-data-list v-else :tdata="callSummaries[0]" :tags="callSummaries[1]" ></call-summary-data-list>
     </base-table>
    </base-container>
-  
+
 </template>
 
 
@@ -22,21 +33,29 @@ export default {
         return {
             error: null,
             ctype: null,
-            querystring: null
-            
+            querystring: null,
+            isLoading: false,
+            appName: this.$store.getters.getAppName
         }
     },
     methods:{
-        searchResult(from,to,tag){
-            this.$router.push({path:this.$route.path, query:{startdate:from ,enddate:to,tagname:tag}})
+        async searchResult(from,to,tag){
+            await this.$router.push({path:this.$route.path, query:{startdate:from ,enddate:to,tagname:tag}})
+                      
         },
-        fetchSummaries(){
+        searchResultNumber(data){
+           
+            this.$router.replace({path: data.searchpath, query: {number:data.number}})
+        },
+        async fetchSummaries(){
             this.querystring = window.location.search.substring(1)
-       
             this.ctype = this.calltype
             try{
-                this.$store.dispatch('agentcdr/fetchCallsSummaries',{querystring:this.querystring,calltype:this.calltype})
-                
+               this.isLoading = true
+               await this.$store.dispatch('agentcdr/fetchCallsSummaries',{querystring:this.querystring,calltype:this.calltype})
+               this.isLoading = false
+              
+              
             }catch(e){
                 this.error = e.message || 'Error fetch call summary'
             }
@@ -48,11 +67,14 @@ export default {
         //    console.log(dataToBeExported)  
              window.Jhxlsx.export(dataToBeExported.tableData, dataToBeExported.options);
         
+        },
+        handleError(){
+            this.error = null
         }
     },
     computed:{
         callSummaries(){
-           let callsummary ;
+           let callsummary 
            if(this.calltype == 'csdinbound'){
                 callsummary = this.$store.getters['agentcdr/getCsdInBoundSummaries']
                  
@@ -67,20 +89,35 @@ export default {
            return callsummary
           
         },
-       
+       getAutoLogoutStatus(){
+           return this.$store.getters['getAutoLogoutStatus']
+       }
     },
     created(){
-
+        this.$store.dispatch('checkIfCurrentLogin')
         this.fetchSummaries()
+        
     },
     watch:{
         calltype(){
-           
+            this.callSummaries = []
             this.fetchSummaries()
         },
        $route(){
+          this.callSummaries = []
            this.fetchSummaries()
-       }
+       },
+       getAutoLogoutStatus(currentstatus , oldstatus){
+         if(currentstatus && currentstatus !== oldstatus){
+           this.$router.replace('/'+this.appName+'/login')
+        }
+      }
     }
 }
 </script>
+
+<style scoped>
+    .export_btn {
+        border-radius: 5px;
+    }
+</style>

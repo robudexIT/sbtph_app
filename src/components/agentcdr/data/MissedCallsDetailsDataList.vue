@@ -19,7 +19,7 @@
             modalTitle="Add Comment"
             formId="commentTag"
             formMethod="POST"
-            mode="comment"
+            mode="commentonly"
             :callDetails="callDetails"
             :currentComment="comment"
             :tag="tag"

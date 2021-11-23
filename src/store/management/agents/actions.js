@@ -1,5 +1,6 @@
 import API from '../../../api.js'
 
+
 export default {
     async fetchAllAgents(context,payload){
         const agent = payload.agent
@@ -23,12 +24,14 @@ export default {
             method: 'POST',
             body: JSON.stringify(payload.data)
         })
+        
         if(!response.ok){
+           
             const error = new Error('Error in creating new '  + agent + ' Agent')
             throw error
         }else{
-            //const data = await response.json()
             context.dispatch('fetchAllAgents',payload)
+     
         }
     },
     async updateAgent(context, payload){
@@ -41,15 +44,6 @@ export default {
             const error = new Error('Error updating '+ agent+ ' agent  info')
             throw error
         }else{
-            const data = await response.json()
-            console.log(data)
-
-            //copy response to the payload
-            payload.name = data[0].name
-            payload.extension =data[0].extension
-            payload.email = data[0].email
-            payload.method = 'update'
-            
           
            context.dispatch('fetchAllAgents',payload)
         }
@@ -64,13 +58,47 @@ export default {
             const error = new Error('Error in deleting ' +agent + 'Agent')
             throw error
         }else{
-            const data = await response.json()
+            // const data = await response.json()
             
-            payload.extension = data[0].extension
-            payload.method = 'delete'
+            // payload.extension = data[0].extension
+            // payload.method = 'delete'
            // context.commit('mutSingleAgent',payload)
 
             context.dispatch('fetchAllAgents',payload)
         }
+    },
+   async fetchAgentBelongsTo(context){
+       const extension = context.rootGetters.getLoggedinUserData.extension
+       const response = await fetch(`${API.getAgentBelongsTo}?extension=${extension}`)
+
+       if(!response.ok){
+           const error = new Error('Cannot info where is agent is belong')
+           throw error
+       }
+       const data = await response.json()
+       
+       context.commit('mutAgentBelongsTo', data[0])
+    },
+  async udpateAgentBelongsTo(context, payload){
+    const extension = context.rootGetters.getLoggedinUserData.extension
+    const calltype = payload.calltype
+    const body = {
+        extension,
+        calltype
     }
-}
+    console.log(body)
+    const response  = await fetch(API.updateAgentBelongsTo, {
+        method: 'POST',
+        body: JSON.stringify(body)
+    })
+
+    if(!response.ok){
+        const error = new Error('Cannot update agent calltype at this moment please try again later')
+        throw error
+    }
+
+    const data = await response.json()
+
+    console.log(data)
+  }
+}//

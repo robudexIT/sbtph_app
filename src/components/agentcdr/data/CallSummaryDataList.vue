@@ -6,13 +6,18 @@
        <td v-if="item.teamlead">{{item.teamlead}}</td>
        <td>{{item.total_counts}}</td>
        <td>{{item.total_duration}}</td>
-       <td><router-link :to="item.link_details">{{item.getdate}}</router-link></td>
+       <td><router-link :to="appName+item.link_details">{{item.getdate}}</router-link></td>
      </tr>
 </template>
 
 <script>
     export default {
         props:['tdata','tags'],
+        data() {
+          return {
+            appName: '/'+ this.$store.getters.getAppName  + '/'
+          }
+        }
      
     }
     

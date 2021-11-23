@@ -1,7 +1,6 @@
 <template>
-    <h1>The Management  Menu</h1>
-    <router-view></router-view>
     <management-nav></management-nav>
+    <router-view></router-view>
 </template>
 
 

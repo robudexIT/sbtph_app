@@ -70,5 +70,17 @@ export default {
       }
 
       
+    },   
+    mutMpvTotalCounts(state, payload){
+        state.mpvTotalCounts = payload
+    },
+    mutVoiceMails(state, payload){
+        state.voiceMails = payload
+    },
+    mutParkedCalls(state, payload){
+        state.parkedCalls = payload
+    },
+    mutResultSearchNumber(state, payload){
+        state.resultSearchNUmber = payload
     }   
 }

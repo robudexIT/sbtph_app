@@ -8,6 +8,9 @@ export default {
           state.salesAgents = payload.data
       }
     },
+    mutAgentBelongsTo(state, payload){
+      state.agentBelongsTo = payload
+    }
 
   //   mutSingleAgent(state, payload){
   //  //   console.log(payload.extension)

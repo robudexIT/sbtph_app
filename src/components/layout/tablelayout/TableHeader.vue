@@ -58,7 +58,7 @@
     </tr>
 
      <tr v-if="theader=='phoneloginheader'">
-         <th scope="col">#</th>
+        <th scope="col">#</th>
         <th scope="col">EXTENSION</th>
         <th scope="col">NAME</th>
         <th scope="col">LOGIN/LOGOUT</th>
@@ -66,6 +66,13 @@
         <th scope="col">SERVER USED</th>
         <th scope="col">SERVER STATUS</th>
         <th scope="col">CHANNEL STAT</th>
+    </tr>
+
+     <tr v-if="theader=='phoneloginheaderdetails'">
+        <th scope="col">#</th>
+        <th scope="col">LOG</th>
+        <th scope="col">DATE</th>
+        <th scope="col">TIME</th>
     </tr>
 
      <tr v-if="theader=='agent'">
@@ -88,7 +95,36 @@
     <tr v-if="theader=='metricsHeader'">
         <th v-for="header in metricsHeader" :key='header'>{{header}}</th>
     </tr>
+    <tr v-if="theader=='searchnumberIn'">
+        <th scope="col">#</th>
+        <th  scope="col">Answered_By</th>
+        <th scope="col">Extn</th>
+         <th scope="col">Called(#)</th>
+         <th scope="col">Caller</th>
+        <th scope="col">CallStatus</th>
+        <th scope="col">StartTime</th>
+        <th scope="col">EndTime</th>
+        <th scope="col">Duration</th>
+        <th scope="col">Recordings</th> 
+        <th scope="col">Date</th>
+        <th scope="col">Comment/Tag</th>
+      
+    </tr>
 
+    <tr v-if="theader=='searchnumberOut'">
+        <th scope="col">#</th>
+        <th  scope="col">Caller</th>
+         <th scope="col">Extn</th>
+        <th scope="col">Called(#)</th>
+        <th scope="col">CallStatus</th>
+        <th scope="col">StartTime</th>
+        <th scope="col">EndTime</th>
+        <th scope="col">Duration</th>
+        <th scope="col">Recordings</th> 
+        <th scope="col">Date</th>
+        <th scope="col">Comment/Tag</th>
+      
+    </tr>
     <select-date-range-modal-form></select-date-range-modal-form>
     
 </template>
@@ -97,9 +133,9 @@
 
 export default {
 
-    props:['theader','metricsHeader'],
+    props:['theader','metricsHeader', 'calltype',],
 
-    created(){}
+
    
 }
 

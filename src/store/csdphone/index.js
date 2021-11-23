@@ -8,7 +8,7 @@ const csd = {
         return {
             phoneLoggedIn: [],
             phoneLoggedOut:[],
-            allAgentPhoneLog:[] 
+            agentPhoneLogsDetails:[] 
         }
     },
     getters,

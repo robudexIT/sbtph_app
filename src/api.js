@@ -3,12 +3,17 @@ const HTTPADDR = 'http://103.5.6.2/sbtph_api/api'
 const API = {
     phoneLoggedIn: `${HTTPADDR}/active.php`,
     phoneLogggedOut: `${HTTPADDR}/inactive.php`,
-    phoneLogDetails : `${HTTPADDR}/login_logout_details.php`,
+    phoneLogsDetails : `${HTTPADDR}/login_logout_details.php`,
     missedCallsSummaries: `${HTTPADDR}/csdinbound/csd_inbound_missed_calls_summary_api.php`,
     missedCallsDetails: `${HTTPADDR}/csdinbound/csd_inbound_missed_calls_details_api.php`,
     voiceMails: `${HTTPADDR}/get_voicemail.php`,
     parkedCalls: `${HTTPADDR}/get_parked_calls.php`,
-
+    mpvTotalCounts: `${HTTPADDR}/get_total_counts.php`,
+    getVoiceMails: `${HTTPADDR}/get_voicemail.php`,
+    deleteVoiceMails: `${HTTPADDR}/delete_voicemail.php`,
+    getParkedCalls: `${HTTPADDR}/get_parked_calls.php`,
+    getAgentBelongsTo: `${HTTPADDR}/getCalltype.php`,
+    updateAgentBelongsTo: `${HTTPADDR}/collection/updateCallType.php`,
 
     getCallSummaries: {
         csdinbound:  `${HTTPADDR}/csdinbound/csd_inbound_call_summary_api.php`,
@@ -62,6 +67,14 @@ const API = {
         salesdetails: `${HTTPADDR}/sales/put_sales_call_comment_api.php`,
         missedcalls: `${HTTPADDR}/csdinbound/put_inbound_call_comment_api.php`,
     },
+
+    searchNumber: {
+      csdinbounddetails:  `${HTTPADDR}/csdinbound/search_inbound_number_api.php`,
+      csdoutbounddetails: `${HTTPADDR}/csdoutbound/search_outbound_number_api.php`,
+      collectiondetails: `${HTTPADDR}/collection/search_collection_number_api.php`,
+      salesdetails: `${HTTPADDR}/sales/search_sales_number_api.php`
+    },
+    login: `${HTTPADDR}/login.php`,
 
     getTags: `${HTTPADDR}/tag_manage.php`,
     createTag : `${HTTPADDR}/create_tag.php`,

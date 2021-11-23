@@ -7,7 +7,7 @@ export default {
         }
        
     },
-    getAllAgentPhoneLog(state,payload){
-        state.allAgentPhoneLog = payload
+    mutagentPhoneLogsDetails(state,payload){
+        state.agentPhoneLogsDetails = payload
     }
 }

@@ -4,14 +4,25 @@ export default {
     async fetchCallsSummaries(context,payload){
 
         const calltype = payload.calltype
-        const response = await fetch(`${API.getCallSummaries[calltype]}?${payload.querystring}`)
+        const response = await fetch(`${API.getCallSummaries[calltype]}?${payload.querystring}`,{
+        
+        })
 
         if(!response.ok){
             const error = new Error('Error in fetch Calls Summary')
             throw error
         }
-
+       
         const data = await response.json()
+        
+
+        const extension = context.rootGetters.getLoggedinUserData.extension
+        const position  = context.rootGetters.getLoggedinUserData.position
+        
+        if(position == '21' || position == '31' || position == '41'){
+          data[0] = data[0].filter(d => d.extension === extension)
+        }
+       
         payload.data = data
         
        //excel export settings 
@@ -72,16 +83,29 @@ export default {
     },
     async fetchCallsDetails(context,payload){
         const calltype = payload.calltype
-        const response = await fetch(`${API.getCallDetails[calltype]}?${payload.querystring}`)
-
+        const response = await fetch(`${API.getCallDetails[calltype]}?${payload.querystring}`,{
+        
+        })
+        
         if(!response.ok){
-            const error = new Error('Error in fetch Calls Details')
+          
+            const error = new Error('Error in fetching Calls Details.Please Try again')
             throw error
         }
 
         const data = await response.json()
-        payload.data = data
-
+       
+        if(!Array.isArray(data) || data.length == 0 || data.message){
+          const error = new Error('Result Not Found ')
+          
+          payload.data = []
+          context.commit('mutCallsDetails', payload)
+          throw error 
+        }else{
+          payload.data = data
+        }
+        
+  
         //excel export settings
         const detailsExportObject = {
             "options": {
@@ -165,13 +189,18 @@ export default {
             throw error
         }else{
             const data = await response.json()
-
+            if(data.length == 0 || !Array.isArray(data)){
+              const error = new Error('No MissedCalls')
+              context.commit('mutMissedCallsSummaries',[])
+              throw error
+            }
             // tranform misscalls_details fields from
             // "misscalls_details": "csd_missed_calls_details.php?startdate=2021-09-01&enddate=2021-09-10"
             // to "misscalls_details": "/missedcallsdetails?startdate=2021-09-01&enddate=2021-09-10"
+          
             const transformdata = data.map(d => {
                 const getquery = d.misscalls_details.split('?')[1]
-                d.misscalls_details = `/missedcallsdetails?${getquery}`
+                d.misscalls_details = `missedcallsdetails?${getquery}`
                 return d
             })
             context.commit('mutMissedCallsSummaries',transformdata)
@@ -179,12 +208,25 @@ export default {
     },
     async fetchMissedCallsDetails(context, payload){
         const response = await fetch(`${API.missedCallsDetails}?${payload.querystring}`)
-
+    
         if(!response.ok){
             const error = new Error('Cannot Fetch MisseCalls Details')
             throw error
-        }else{
-            const data = await response.json()
+        }
+
+        else{
+
+          const data = await response.json()
+        
+          if(data.length == 0 || !Array.isArray(data)){
+           
+            const error = new Error('No MissedCalls')
+            const errorData = {}
+            errorData.data = []
+            errorData.missedcallsExportObject = {}
+            context.commit('mutMissedCallsDetails',errorData)
+            throw error
+          }
             const missedcallsExportObject = {
               "options": {
                 "fileName": "missed_call_details"
@@ -287,6 +329,96 @@ export default {
             context.commit('mutCommentTag', payload)
         }
 
+    },
+    async fetchMvpTotalCounts(context){
+       const response = await fetch(API.mpvTotalCounts)
+
+       if(!response.ok){
+         const error = new Error('Cannot Fetch')
+         throw error
+       }
+       const data = await response.json()
+       context.commit('mutMpvTotalCounts', data)
+       
+
+    },
+    async fetchVoiceMails(context){
+      const response = await fetch(API.getVoiceMails)
+      
+       if(!response.ok){
+          const error = new Error('Cannot Fetch VoiceMails')
+          throw error
+
+       }
+       const data = await response.json()
+       if(!Array.isArray(data) || data.length == 0 || data.message){
+         const error = new Error('Result not found')
+         context.commit('mutVoiceMails',[])
+         throw error
+       }else{
+         context.commit('mutVoiceMails',data)
+       }
+
+    },
+    async deleteVoiceMails(context, payload){
+     
+      const timestamp = payload.timestamp
+  
+      const response = await fetch(`${API.deleteVoiceMails}?timestamp=${timestamp}`)
+
+      if(!response.ok){
+        const error = new Error('Cannot be delete')
+        throw error
+      }
+      // const data = await response.json()
+     
+
+      context.dispatch('fetchVoiceMails')
+
+
+    },
+    async fetchParkedCalls(context){
+      const response = await fetch(API.getParkedCalls)
+      
+      if(!response.ok){
+        const error = new Error('Cannot fetch ParkedCalls')
+        throw error
+      }
+      const data = await response.json()
+      
+      if(!Array(data) || data.length == 0 || data.message){
+        const error = new Error('Result not found')
+        context.commit('mutParkedCalls', [])
+        throw error
+      }else{
+        context.commit('mutParkedCalls', data)
+      }
+    },
+    
+    async fetchSearchedNumber(context,payload){
+      const querystring = payload.querystring
+      const calltype = payload.calltype
+    
+      const response = await fetch(`${API.searchNumber[calltype]}?${querystring}`)
+
+      if(!response.ok){
+        const error = new Error('No Number Found')
+        throw error
+      }
+      const data = await response.json()
+
+     
+      if(!Array.isArray(data) || data.length == 0 || data.message){
+        const error = new Error('Result Not Found ')
+       
+        payload.data = []
+        context.commit('mutCallsDetails', payload)
+        throw error 
+      }else{
+        payload.data = data
+      }
+    
+      context.commit('mutCallsDetails',payload)
     }
       
 }

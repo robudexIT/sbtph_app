@@ -1,12 +1,14 @@
 import getters from './getters.js'
-import mutations from './getters.js'
+import mutations from './mutations.js'
 import actions from './actions.js'
 
 const auth = {
     // namespaced:true,
     state(){
         return {
-            userId: 'Rogmer'
+           jwtToken: null,
+           loggedinUserData: null,
+           autoLogout: false
         }
     },
     getters,

@@ -1,21 +1,27 @@
 <template>
-    <!-- <div>{{ metricsGenerated }}</div> -->
-     <base-container>
-        
-        <button class="btn btn-primary h-25 p-1 w-100 " @click="exportMetrics">Export <font-awesome-icon icon="spinner" />
-        </button>
-        <font-awesome-icon icon="coffee"></font-awesome-icon>
-        <base-table theader="metricsHeader" tableclass='metrics' :metricsHeader="metricsGenerated.tableHeader">
-             <generated-tag-metrics-data-list v-if="option_metrics=='tag'"  :tdata="metricsGenerated.tableTagRecords"></generated-tag-metrics-data-list>
-             <generated-cdr-metrics-data-list v-else  :tdata="metricsGenerated.tableCdrRecords" :optiondata="metricsGenerated.outSideTableData"></generated-cdr-metrics-data-list>
-        </base-table>
-        <div v-if="option_metrics != 'tag'">
-            <p>Date Range: {{dateTimeRange}}</p>
-             <p>Grand Total Counts: {{grandTotalCounts}}</p>
-            <p>Grand Total Call Duration(HH:MM:SS): {{grandTotalDurations}}</p>
-        </div> 
-        
-     </base-container>
+   <base-dialog :show="!!error" @close="handleError">
+     <p>{{error}}</p>
+   </base-dialog>
+  <base-container v-if="isLoading">
+      <base-dialog :show="isLoading">
+        <base-spinner> <p>Fetching Data From the Database Please Wait....</p></base-spinner>
+      </base-dialog>
+  </base-container>  
+  <base-container v-else>
+     <button class="btn btn-primary h-25 p-1 w-100 " @click="exportMetrics">Export <font-awesome-icon icon="spinner" />
+     </button>
+     <font-awesome-icon icon="coffee"></font-awesome-icon>
+     <base-table theader="metricsHeader" tableclass='metrics' :metricsHeader="metricsGenerated.tableHeader">
+          <generated-tag-metrics-data-list v-if="option_metrics=='tag'"  :tdata="metricsGenerated.tableTagRecords"></generated-tag-metrics-data-list>
+          <generated-cdr-metrics-data-list v-else  :tdata="metricsGenerated.tableCdrRecords" :optiondata="metricsGenerated.outSideTableData"></generated-cdr-metrics-data-list>
+     </base-table>
+     <div v-if="option_metrics != 'tag'">
+         <p>Date Range: {{dateTimeRange}}</p>
+          <p>Grand Total Counts: {{grandTotalCounts}}</p>
+         <p>Grand Total Call Duration(HH:MM:SS): {{grandTotalDurations}}</p>
+     </div> 
+     
+  </base-container>
      
 </template>
 
@@ -35,7 +41,13 @@ export default {
         FontAwesomeIcon
     },
     props: ['sort_order','option_metrics'],
-   
+    data(){
+        return {
+            error: null,
+            isLoading: false,
+            appName: this.$store.getters.getAppName
+        }
+    },
     methods: {
        async generateMetrics(){
             //get option_metrics from the querystring and add metrics word to it 
@@ -45,9 +57,11 @@ export default {
           
             // this.metricsHeader = 'metrics_'+ this.option_metrics
             try {
+               this.isLoading = true
                await this.$store.dispatch('metrics/generateMetrics',{querystring,sort_order:this.sort_order, option_metrics:this.option_metrics})
+               this.isLoading = false
             }catch(e){
-                console.log(e)
+                this.error = e.message
             }
         },
         exportMetrics(){
@@ -63,6 +77,9 @@ export default {
             
           
         
+        },
+        handleError(){
+            this.error = null
         }
     },
     computed:{
@@ -90,12 +107,23 @@ export default {
             },
             grandTotalDurations(){
                 return this.$store.getters['metrics/getGrandTotalDurations']
-            }
+            },
+             getAutoLogoutStatus(){
+                 return this.$store.getters['getAutoLogoutStatus']
+             }
     },
     created(){
-        this.generateMetrics()  
-      
+        this.$store.dispatch('checkIfCurrentLogin')
+        this.generateMetrics()
+
     },
+    watch:{
+      getAutoLogoutStatus(currentstatus , oldstatus){
+            if(currentstatus && currentstatus !== oldstatus){
+            this.$router.replace('/'+this.appName+'/login')
+        }
+      }
+    }
  
 }
 </script>

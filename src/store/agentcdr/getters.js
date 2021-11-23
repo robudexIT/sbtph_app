@@ -35,7 +35,9 @@ export default {
     getVoiceMails(state){
         return state.voiceMails
     },
-
+    getMpvTotalCounts(state){
+        return state.mpvTotalCounts
+    },
 
     getTagComment(state){
         return state.tagComment 
@@ -48,5 +50,8 @@ export default {
     },
     getMissedCallsDetailsExport(state){
         return state.missedCallsDetailsExport
-    }
+    },
+    getResultSearchNUmber(state){
+        return state.resultSearchNUmber 
+    } 
 }

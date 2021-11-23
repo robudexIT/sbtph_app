@@ -16,8 +16,10 @@ export default {
             method: 'POST',
             body: JSON.stringify(payload)
         })
+        const data = response.json()
+        console.log(data)
         if(!response.ok){
-            const error = new Error('Unable to create new Tag')
+            const error = new Error('Unable to create new Tag. Please Check if Tag was already exists')
             throw error
         }else{
             context.dispatch('fetchAllTags')

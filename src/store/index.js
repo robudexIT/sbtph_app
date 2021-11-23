@@ -19,16 +19,20 @@ const store = createStore({
     },
     state(){
         return {
-            localUserId: 'local',
-             userName: 'Rogmer'
+             AppAdmin: 'Rogmer Bulaclac',
+             AppDeveloper: 'Rogmer Bulaclac',
+             AppName:'sbtph_app'
         }
     },
     getters:{
-        getLocal(state){
-            return state.localUserId
+        getAppAdmin(state){
+            return state.AppAdmin
         },
-        getUserName(state){
-            return state.userName
+        getAppDeveloper(state){
+            return state.AppDeveloper
+        },
+        getAppName(state){
+            return state.AppName
         }
     }
 })
