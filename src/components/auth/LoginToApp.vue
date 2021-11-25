@@ -47,7 +47,7 @@ export default {
                       position == '21' || position =='22'  || position =='0')
                     {
                          this.$router.replace({path: `/${this.appName}/phone/loggedin`})
-                    }else if(position == '3' || position == '10'){
+                    }else if(position == '2' || position == '3' || position == '10'){
                          this.$router.replace({path: `/${this.appName}/callsummaries/csdinbound`})
                     }else if (position == '1'){
                         this.$router.replace ({path: `/${this.appName}/callsummaries/sales`})

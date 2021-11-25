@@ -11,6 +11,7 @@
      <collection-csd-agent-nav v-else-if="loggedInUserPosition=='21'" :mvpTotalCounts="mvpTotalCounts"></collection-csd-agent-nav>
      <collection-csd-tl-nav v-else-if="loggedInUserPosition=='22'" :mvpTotalCounts="mvpTotalCounts"></collection-csd-tl-nav>
      <qc-sales-nav v-else-if ="loggedInUserPosition=='1'"></qc-sales-nav>
+     <qc-csd-collection-nav v-else-if="loggedInUserPosition=='2'"></qc-csd-collection-nav>
      <qc-all-agents-nav v-else-if="loggedInUserPosition=='3'"></qc-all-agents-nav>
 
   </div>
@@ -28,6 +29,7 @@
  import CollectionAgentNav from './navoptions/CollectionAgentNav.vue'
  import QcSalesNav from './navoptions/QcSalesNav.vue'
  import CollectionCsdAgentNav from './navoptions/CollectionCsdAgentNav.vue'
+ import QcCsdCollectionNav from './navoptions/QcCsdCollectionNav.vue'
  import QcAllAgentsNav from './navoptions/QcAllAgentsNav.vue'
 
 export default {
@@ -43,6 +45,7 @@ export default {
      CollectionCsdAgentNav,
      QcSalesNav,
      QcAllAgentsNav,
+     QcCsdCollectionNav,
   }, 
   data(){
     return {

@@ -44,10 +44,10 @@ const router = createRouter({
         //     path: '/' , redirect: '/phone/loggedin',  meta:{requiredAuth: true}
         // },
         {
-            path: `/${appName}/callsummaries/:calltype`, component: CallsSummaries, props:true, meta:{requiredAuth: true,allowedPosition:['1','3','99','10','20','21','22','30','31','40','41']}
+            path: `/${appName}/callsummaries/:calltype`, component: CallsSummaries, props:true, meta:{requiredAuth: true,allowedPosition:['1','2','3','99','10','20','21','22','30','31','40','41']}
         },
         {
-            path: `/${appName}/calldetails/:calltype`, component: CallsDetails, props:true,  meta:{requiredAuth: true,allowedPosition:['1','3','99','10','20','21','22','30','31','40','41']}
+            path: `/${appName}/calldetails/:calltype`, component: CallsDetails, props:true,  meta:{requiredAuth: true,allowedPosition:['1','2','3','99','10','20','21','22','30','31','40','41']}
         },
         {
             path: `/${appName}/phone/:phonestatus`, component: ActiveInactive,props: true,  meta:{requiredAuth:true ,allowedPosition:['99','20','21','22','30','31']}
@@ -140,8 +140,8 @@ router.beforeEach((to, _, next) => {
             (['10'].includes(store.getters.getLoggedinUserData.position))){
      alert('You currently not Allowed to Access this resource..')           
      next(false)
-    }else if(to.path == `/${appName}/management/manage/sales` && store.getters.hasToken &&
-        (['20','30','40'].includes(store.getters.getLoggedinUserData.position))){
+    }else if((to.path == `/${appName}/management/manage/sales` || to.path.includes('sales') || to.path.includes('salesdetails')) && store.getters.hasToken &&
+        (['20','30','40','2'].includes(store.getters.getLoggedinUserData.position))){
     alert('You currently not Allowed to Access this resource..')  
     next(false)        
     // }else if(store.getters.hasToken && store.getters.getLoggedinUserData.position == '0'){
@@ -164,7 +164,8 @@ router.beforeEach((to, _, next) => {
             store.getters.getLoggedinUserData.position == '41')){
       next(`/${appName}/callsummaries/collection`)       
     }else if( store.getters.hasToken &&
-        to.path == `/${appName}` && (store.getters.getLoggedinUserData.position == '3' ||
+        to.path == `/${appName}` && (store.getters.getLoggedinUserData.position == '2' ||
+        store.getters.getLoggedinUserData.position == '3' ||
         store.getters.getLoggedinUserData.position == '10'
         )){
        next(`/${appName}/callsummaries/csdinbound`)
@@ -176,7 +177,7 @@ router.beforeEach((to, _, next) => {
     store.getters.getLoggedinUserData.position == '31' || 
     store.getters.getLoggedinUserData.position == '41'
    )&& ( to.query.extension && to.query.extension !== store.getters.getLoggedinUserData.extension)){
-    alert('Updating or changing directly on the url is not allowed') 
+    alert('You currently not Allowed to Access this resource..') 
     next(false)
    }else {
      
