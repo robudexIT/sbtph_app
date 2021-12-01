@@ -1,4 +1,4 @@
-const HTTPADDR = 'http://103.5.6.2/sbtph_api/api'
+const HTTPADDR = 'http://{REPLACE_IT_WITH_SBTPHILSIP}/sbtph_api/api'
 
 const API = {
     phoneLoggedIn: `${HTTPADDR}/active.php`,
