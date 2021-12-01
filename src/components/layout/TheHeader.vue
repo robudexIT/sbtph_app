@@ -49,7 +49,7 @@ export default {
       },
      displayAppTitle(){
       let position = this.$store.getters['getLoggedinUserData'].position
-      if(position == '1' || position == '3'){
+      if(position == '1' || position == '2' || position == '3'){
         return 'QC MONITORING APPS'
       }else if(position == '10'){
         return 'HR MONITORING APPS'
@@ -63,7 +63,9 @@ export default {
        //return 1 if user/agent are belong to CSD and Collection
        //return 0 if user/agent is only belong to CSD or Collection
        let blended = this.$store.getters['getLoggedinUserData'].blended
-       return blended === '1' ? true : false
+       let position = this.$store.getters['getLoggedinUserData'].position
+
+       return blended === '1'  && (position == '21' || position == '22' || position == '99' || position == '20') ? true : false
      },
      belongsTo(){
        return this.$store.getters['agentinfo/getAgentBelongsTo']
