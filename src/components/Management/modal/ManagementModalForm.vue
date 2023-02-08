@@ -249,7 +249,7 @@
                   tagname: this.mdlTag.val,
                   tagtype: this.mdlTagType.val
                 }
-                
+                console.log(data)
               }else if(this.modalId == 'modalAgent' && this.formId == 'addAgent'){
                   data = {
                   name: this.mdlName.val,

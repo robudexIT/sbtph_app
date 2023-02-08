@@ -39,8 +39,8 @@ export default {
         }
     },
     methods:{
-        async searchResult(from,to,tag){
-            await this.$router.push({path:this.$route.path, query:{startdate:from ,enddate:to,tagname:tag}})
+        async searchResult(from,to,tag,duration,direction){
+            await this.$router.push({path:this.$route.path, query:{startdate:from ,enddate:to,tagname:tag,duration,direction}})
                       
         },
         searchResultNumber(data){

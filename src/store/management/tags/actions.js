@@ -16,6 +16,7 @@ export default {
             method: 'POST',
             body: JSON.stringify(payload)
         })
+        console.log('test')
         const data = response.json()
         console.log(data)
         if(!response.ok){

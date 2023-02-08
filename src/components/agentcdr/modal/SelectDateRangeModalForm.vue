@@ -29,6 +29,25 @@
                       </select>
                     
                     </div>
+                     <div class="mb-3" v-if="calltype != 'csdinbound'">
+                      <label for="TagType">Select Duration Options(in seconds):</label>
+                       <select class="form-select" required v-model="durationOptions" >
+                            <option selected value="0 UP">0 UP</option>
+                            <option  value="10 UP">10 UP</option>
+                            <option  value="20 UP">20 UP</option>
+                            <option  value="30 UP">30 UP</option>
+                            <option  value="40 UP">40 UP</option> 
+                            <option  value="50 UP">50 UP</option> 
+                            <option value="60 UP">60 UP</option> 
+                             <option  value="10 DWN">10 DOWN</option>
+                            <option  value="20 DOWN">20 DOWN</option>
+                            <option  value="30 DOWN">30 DOWN</option>
+                            <option  value="40 DOWN">40 DOWN</option>
+                            <option  value="50 DOWN">50 DOWN</option>
+                            <option  value="60 DOWN">60 DOWN</option>
+                      </select>
+                    
+                    </div>
                     <hr>
                     <div class="text-right mb-3">
                           <button type="submit " class="btn btn-primary ml-auto m-1" data-bs-dismiss="modal" id="addbtn" >Submit</button>
@@ -48,12 +67,13 @@
 
 <script>
 export default {
-    props:['tags'],
+    props:['tags', 'calltype'],
     data(){
         return {
             fromDate: null,
             toDate: null,
-            selectedTag: 'all'
+            selectedTag: 'all',
+            durationOptions: '0 UP'
         }
     },
     methods: {
@@ -83,8 +103,13 @@ export default {
              }
         },
         submitFormata(){
-           
-            this.$emit('emittedData',this.fromDate,this.toDate,this.selectedTag)
+            let duration = this.durationOptions.split(" ")[0]
+            let direction = this.durationOptions.split(" ")[1]
+            if(this.calltype == 'csdinbound'){
+               duration = "0"
+               direction = "UP"
+            }
+            this.$emit('emittedData',this.fromDate,this.toDate,this.selectedTag, duration, direction)
         }
     }
 }

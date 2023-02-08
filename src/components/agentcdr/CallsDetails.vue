@@ -78,11 +78,11 @@ export default {
   },
   
   methods:{
-  async searchResult(from,to,tag){
+  async searchResult(from,to,tag,duration,direction){
             let querystring = window.location.search.substring(1)
             let extension = querystring.split('&')[0].split("=")[1]
             let name = querystring.split('&')[1].split("=")[1]
-            await this.$router.push({path:this.$route.path, query:{ extension: extension, name:name,startdate:from ,enddate:to,tagname:tag}})
+            await this.$router.push({path:this.$route.path, query:{ extension: extension, name:name,startdate:from ,enddate:to,tagname:tag,duration,direction}})
    }, 
   
    async fetchCallDetials(){

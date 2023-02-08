@@ -71,13 +71,13 @@ const router = createRouter({
  
         {
             path: `/${appName}/management`, component: ManagementMenu , meta:{requiredAuth: true,allowedPosition:['99','10','20','22','30','40']} ,children:[
-                { path: 'manage/:agent', component: ManageAgents , props : true , meta:{requiredAuth: true,allowedPosition:['99','10','20']}},
-                { path: 'tags', component: ManageTags, props: true ,  meta:{requiredAuth: true, allowedPosition:['99','20']}},
-                { path: 'metrics', component: TheMetrics, props: true ,  meta:{requiredAuth: true,allowedPosition:['99','20']}}
+                { path: 'manage/:agent', component: ManageAgents , props : true , meta:{requiredAuth: true,allowedPosition:['99','10','20','22','30','40']}},
+                { path: 'tags', component: ManageTags, props: true ,  meta:{requiredAuth: true, allowedPosition:['99','20','22','30','40']}},
+                { path: 'metrics', component: TheMetrics, props: true ,  meta:{requiredAuth: true,allowedPosition:['99','20','22','30','40']}}
             ]
         },
         
-        {name:'generatedmetrics', path: `/${appName}/generatedmetrics/:sort_order/:option_metrics`, component: GeneratedMetrics, props: true ,  meta:{requiredAuth: true, allowedPosition:['99','10','20','10']}},
+        {name:'generatedmetrics', path: `/${appName}/generatedmetrics/:sort_order/:option_metrics`, component: GeneratedMetrics, props: true ,  meta:{requiredAuth: true, allowedPosition:['99','10','20','22','10','30','40']}},
 
         { name:'loginpage', path:`/${appName}/login`, component: LoginToApp, props: true,  meta:{requiredNoAuth: true, }},
        
@@ -141,12 +141,23 @@ router.beforeEach((to, _, next) => {
      alert('You currently not Allowed to Access this resource..')           
      next(false)
     }else if((to.path == `/${appName}/management/manage/sales` || to.path.includes('sales') || to.path.includes('salesdetails')) && store.getters.hasToken &&
-        (['20','30','40','2'].includes(store.getters.getLoggedinUserData.position))){
+        (['20','30','40','2','22'].includes(store.getters.getLoggedinUserData.position))){
     alert('You currently not Allowed to Access this resource..')  
     next(false)        
     // }else if(store.getters.hasToken && store.getters.getLoggedinUserData.position == '0'){
     //  alert('You currently dont have any access to all resource.. Please your immediate superior')   
     //  next(false)
+    }else if((to.path == `/${appName}/management/manage/csd` ||
+         to.path == `/${appName}/management/manage/sales`) && store.getters.hasToken && 
+       (['40'].includes(store.getters.getLoggedinUserData.position))){
+         alert('You currently not Allowed to Access this resource..')           
+        next(false)
+    }
+    else if((to.path == `/${appName}/management/manage/sales` ||
+            to.path == `/${appName}/management/manage/collection`) && store.getters.hasToken && 
+            (['30'].includes(store.getters.getLoggedinUserData.position))){
+             alert('You currently not Allowed to Access this resource..')           
+        next(false)
     }
     else if( store.getters.hasToken &&
          to.path == `/${appName}` && (

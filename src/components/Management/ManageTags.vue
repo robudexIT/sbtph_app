@@ -59,9 +59,12 @@ export default {
             }
         },
        async addTag(data){
+         
+           console.log('test')
             try {
+               this.isLoading = true    
                await this.$store.dispatch('tags/createTag',data)
-                   alert('New Tag Was Successfully Added')
+               this.isLoading = false   
                 
             }catch(e){
                 alert(e.message)

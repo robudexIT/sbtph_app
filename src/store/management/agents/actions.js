@@ -19,7 +19,7 @@ export default {
     },
     async createAgent(context,payload){
         const agent = payload.agent
-        
+        console.log(agent)
         const response = await fetch(API.createAgent[agent],{
             method: 'POST',
             body: JSON.stringify(payload.data)

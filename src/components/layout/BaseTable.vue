@@ -15,7 +15,7 @@
                 </tbody>
   </table>
 
-  <select-date-range-modal-form :tags="tags" @emittedData="searchResult"></select-date-range-modal-form> 
+  <select-date-range-modal-form :tags="tags" :calltype="calltype" @emittedData="searchResult"></select-date-range-modal-form> 
   <search-number-modal-form  :calltype="calltype" @emittedDataSearchNumber="searchNumberResult"></search-number-modal-form>
 
 
@@ -41,10 +41,10 @@ export default {
          
     },
     methods:{
-      searchResult(from,to,tag){
+      searchResult(from,to,tag,duration,direction){
         
          
-         this.$emit('emittedData',from,to,tag)
+         this.$emit('emittedData',from,to,tag,duration, direction)
      },
      searchNumberResult(data){
         

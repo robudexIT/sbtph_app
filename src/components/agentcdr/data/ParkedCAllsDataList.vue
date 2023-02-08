@@ -5,7 +5,7 @@
         <td>{{item.time}}</td>
         <td>{{item.getdate}}</td>
 	
-     </tr>
+   </tr>
 </template>
 
 

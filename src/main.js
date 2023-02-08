@@ -31,7 +31,7 @@ app.component('base-dialog',BaseDialog)
 app.use(store)
 app.use(router)
 
-
+console.log('this is main')
 
 app.mount('#app')
 
